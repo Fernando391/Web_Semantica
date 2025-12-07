@@ -1,0 +1,18 @@
+{
+  "PROCESADORES DE CELULARES": "PROCESSEURS DE TÉLÉPHONE PORTABLE",
+  "searchPlaceholder": "Rechercher un processeur...",
+  "searchButton": "Rechercher",
+  "combined": "Combiné",
+  "local": "Local",
+  "dbpedia": "DBpedia",
+  "manufacturer": "Fabricant",
+  "cores": "Cœurs",
+  "frequency": "Fréquence",
+  "gpu": "GPU",
+  "viewDetails": "Voir les détails",
+  "hideDetails": "Masquer les détails",
+  "dbpediaEntity": "Entité DBpedia",
+  "loading": "Chargement...",
+  "noResults": "Aucun résultat trouvé",
+  "resultsFrom": "Affichage de {{count}} résultats de {{endpoint}}"
+}

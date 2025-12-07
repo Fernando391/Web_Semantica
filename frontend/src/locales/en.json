@@ -1,0 +1,35 @@
+{
+    "title": "CELL PHONE PROCESSORS",
+    "searchPlaceholder": "Search processor...",
+    "searchButton": "Search",
+
+    "tabs": {
+        "combined": "Combined",
+        "local": "Local",
+        "dbpedia": "DBpedia"
+    },
+
+    "fields": {
+        "manufacturer": "Manufacturer",
+        "cores": "Cores",
+        "frequency": "Frequency",
+        "gpu": "GPU"
+    },
+
+    "actions": {
+        "viewDetails": "View Details",
+        "hideDetails": "Hide Details"
+    },
+
+    "labels": {
+        "dbpediaEntity": "DBpedia Entity",
+        "owlLocal": "OWL Local",
+        "dbpediaLabel": "DBpedia"
+    },
+
+    "messages": {
+        "loading": "Loading...",
+        "noResults": "No results found",
+        "resultsFrom": "Showing {{count}} results from {{endpoint}}"
+    }
+}

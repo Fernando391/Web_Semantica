@@ -1,0 +1,700 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26/"
+     xml:base="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:untitled-ontology-26="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#esEvolucionDe -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#esEvolucionDe">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#esFabricadoPor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#esFabricadoPor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Fabricante"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#esUsadoEn -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#esUsadoEn">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#DispositivoMovil"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#tieneFuncionAdicional -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#tieneFuncionAdicional">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#FuncionAdicional"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#tieneGPU -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#tieneGPU">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#GPU"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#tieneNucleo -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#tieneNucleo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Nucleo"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#tieneRendimiento -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#tieneRendimiento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Rendimiento"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#usaMicroarquitecturaEficiencia -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#usaMicroarquitecturaEficiencia">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Nucleo"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Microarquitectura"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#usaMicroarquitecturaRendimiento -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#usaMicroarquitecturaRendimiento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Nucleo"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Microarquitectura"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#utilizaArquitectura -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#utilizaArquitectura">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Arquitectura"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#anio_lanzamiento -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#anio_lanzamiento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#anio_lanzamiento_arquitectura -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#anio_lanzamiento_arquitectura">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Arquitectura"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#benchmark_geekbench_multi -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#benchmark_geekbench_multi">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Rendimiento"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#benchmark_geekbench_single -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#benchmark_geekbench_single">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Rendimiento"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#bits -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#bits">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Arquitectura"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#cantidad_nucleos_eficiencia -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#cantidad_nucleos_eficiencia">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Nucleo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#cantidad_nucleos_rendimiento -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#cantidad_nucleos_rendimiento">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Nucleo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#cantidad_nucleos_total -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#cantidad_nucleos_total">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Nucleo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#consumo_max_wats -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#consumo_max_wats">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Rendimiento"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#consumo_reposo_wats -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#consumo_reposo_wats">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Rendimiento"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#es_disenio_personalizado -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#es_disenio_personalizado">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#frecuencia_gpu_MHz -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#frecuencia_gpu_MHz">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#GPU"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#frecuencia_max_GHz -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#frecuencia_max_GHz">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Nucleo"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#implementa_throttling_termico -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#implementa_throttling_termico">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#memoria_cache_L3_MB -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#memoria_cache_L3_MB">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#modelo -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#modelo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#nombre_fabricante -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#nombre_fabricante">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Fabricante"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#nombre_microarquitectura -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#nombre_microarquitectura">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Microarquitectura"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#nombre_modelo_dispositivo -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#nombre_modelo_dispositivo">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#DispositivoMovil"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#nucleos_GPU -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#nucleos_GPU">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#GPU"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#optimizado_para_IA -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#optimizado_para_IA">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#pais_origen -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#pais_origen">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Fabricante"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#principales_mejoras -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#principales_mejoras">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Arquitectura"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#soporta_overclocking -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#soporta_overclocking">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#soporte_ray_tracing -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#soporte_ray_tracing">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#GPU"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#tecnologia_nm -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#tecnologia_nm">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#temperatura_maxima_C -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#temperatura_maxima_C">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Rendimiento"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#tipo_gama -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#tipo_gama">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#version_arquitectura -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#version_arquitectura">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Arquitectura"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Arquitectura -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Arquitectura"/>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Componente -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Componente"/>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#DispositivoMovil -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#DispositivoMovil"/>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Fabricante -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Fabricante"/>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#FuncionAdicional -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#FuncionAdicional"/>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#GPU -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#GPU">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Componente"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Microarquitectura -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Microarquitectura"/>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Nucleo -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Nucleo">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Componente"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Rendimiento -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Rendimiento"/>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Smartphone -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Smartphone">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#DispositivoMovil"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Tablet -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Tablet">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#DispositivoMovil"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#ARMv8_6_A -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#ARMv8_6_A">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Microarquitectura"/>
+        <untitled-ontology-26:bits rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">64</untitled-ontology-26:bits>
+        <untitled-ontology-26:principales_mejoras>Enfocado en seguridad (Memory Tagging, Realms) y mejoras de rendimiento para Inteligencia Artificial y DSP.</untitled-ontology-26:principales_mejoras>
+        <untitled-ontology-26:version_arquitectura>ARMv8.6-A</untitled-ontology-26:version_arquitectura>
+        <rdfs:label>ARMv8_6_A</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#ARMv9_A -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#ARMv9_A">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Microarquitectura"/>
+        <untitled-ontology-26:anio_lanzamiento_arquitectura rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2011</untitled-ontology-26:anio_lanzamiento_arquitectura>
+        <untitled-ontology-26:bits rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">64</untitled-ontology-26:bits>
+        <untitled-ontology-26:principales_mejoras>Introdujo el soporte de 64 bits (AArch64), permitiendo más de 4GB de RAM y un set de instrucciones más limpio.</untitled-ontology-26:principales_mejoras>
+        <untitled-ontology-26:version_arquitectura>ARMv9-A</untitled-ontology-26:version_arquitectura>
+        <rdfs:label>ARMv9_A</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Adreno_740 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Adreno_740">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#GPU"/>
+        <untitled-ontology-26:frecuencia_gpu_MHz rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">925</untitled-ontology-26:frecuencia_gpu_MHz>
+        <untitled-ontology-26:nucleos_GPU rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</untitled-ontology-26:nucleos_GPU>
+        <untitled-ontology-26:soporte_ray_tracing rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</untitled-ontology-26:soporte_ray_tracing>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#AhorroEnergia -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#AhorroEnergia">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#FuncionAdicional"/>
+        <rdfs:label>Seguridad Neural</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Apple -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Apple">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Fabricante"/>
+        <untitled-ontology-26:nombre_fabricante>Apple Inc.</untitled-ontology-26:nombre_fabricante>
+        <untitled-ontology-26:pais_origen>Estados Unidos</untitled-ontology-26:pais_origen>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#AppleA16_Rendimiento -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#AppleA16_Rendimiento">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Rendimiento"/>
+        <untitled-ontology-26:benchmark_geekbench_multi rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5400</untitled-ontology-26:benchmark_geekbench_multi>
+        <untitled-ontology-26:benchmark_geekbench_single rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1870</untitled-ontology-26:benchmark_geekbench_single>
+        <untitled-ontology-26:consumo_max_wats rdf:datatype="http://www.w3.org/2001/XMLSchema#float">6.0</untitled-ontology-26:consumo_max_wats>
+        <untitled-ontology-26:consumo_reposo_wats rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.7</untitled-ontology-26:consumo_reposo_wats>
+        <untitled-ontology-26:temperatura_maxima_C rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">88</untitled-ontology-26:temperatura_maxima_C>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Apple_5_Core_GPU -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Apple_5_Core_GPU">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#GPU"/>
+        <untitled-ontology-26:frecuencia_gpu_MHz rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">700</untitled-ontology-26:frecuencia_gpu_MHz>
+        <untitled-ontology-26:nucleos_GPU rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</untitled-ontology-26:nucleos_GPU>
+        <untitled-ontology-26:soporte_ray_tracing rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</untitled-ontology-26:soporte_ray_tracing>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Apple_A16_Bionic -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Apple_A16_Bionic">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <untitled-ontology-26:esFabricadoPor rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Apple"/>
+        <untitled-ontology-26:esUsadoEn rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#iPhone_14_Pro"/>
+        <untitled-ontology-26:tieneFuncionAdicional rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#IA"/>
+        <untitled-ontology-26:tieneGPU rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Apple_5_Core_GPU"/>
+        <untitled-ontology-26:tieneNucleo rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Everest_Sawtooth_Cores"/>
+        <untitled-ontology-26:tieneRendimiento rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#AppleA16_Rendimiento"/>
+        <untitled-ontology-26:utilizaArquitectura rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#ARMv8_6_A"/>
+        <untitled-ontology-26:anio_lanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2022</untitled-ontology-26:anio_lanzamiento>
+        <untitled-ontology-26:es_disenio_personalizado rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</untitled-ontology-26:es_disenio_personalizado>
+        <untitled-ontology-26:implementa_throttling_termico rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</untitled-ontology-26:implementa_throttling_termico>
+        <untitled-ontology-26:memoria_cache_L3_MB rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">16</untitled-ontology-26:memoria_cache_L3_MB>
+        <untitled-ontology-26:modelo>A16 Bionic</untitled-ontology-26:modelo>
+        <untitled-ontology-26:optimizado_para_IA rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</untitled-ontology-26:optimizado_para_IA>
+        <untitled-ontology-26:soporta_overclocking rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</untitled-ontology-26:soporta_overclocking>
+        <untitled-ontology-26:tecnologia_nm rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</untitled-ontology-26:tecnologia_nm>
+        <untitled-ontology-26:tipo_gama>gama alta</untitled-ontology-26:tipo_gama>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Everest_Sawtooth_Cores -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Everest_Sawtooth_Cores">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Nucleo"/>
+        <untitled-ontology-26:cantidad_nucleos_eficiencia rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</untitled-ontology-26:cantidad_nucleos_eficiencia>
+        <untitled-ontology-26:cantidad_nucleos_rendimiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</untitled-ontology-26:cantidad_nucleos_rendimiento>
+        <untitled-ontology-26:cantidad_nucleos_total rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</untitled-ontology-26:cantidad_nucleos_total>
+        <untitled-ontology-26:frecuencia_max_GHz rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.46</untitled-ontology-26:frecuencia_max_GHz>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#IA -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#IA">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#FuncionAdicional"/>
+        <rdfs:label>IA</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Kryo_Gen2_Cores -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Kryo_Gen2_Cores">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Nucleo"/>
+        <untitled-ontology-26:cantidad_nucleos_eficiencia rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</untitled-ontology-26:cantidad_nucleos_eficiencia>
+        <untitled-ontology-26:cantidad_nucleos_rendimiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</untitled-ontology-26:cantidad_nucleos_rendimiento>
+        <untitled-ontology-26:cantidad_nucleos_total rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">8</untitled-ontology-26:cantidad_nucleos_total>
+        <untitled-ontology-26:frecuencia_max_GHz rdf:datatype="http://www.w3.org/2001/XMLSchema#float">3.4</untitled-ontology-26:frecuencia_max_GHz>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Qualcomm -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Qualcomm">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Fabricante"/>
+        <untitled-ontology-26:nombre_fabricante>Qualcomm</untitled-ontology-26:nombre_fabricante>
+        <untitled-ontology-26:pais_origen>Estados Unidos</untitled-ontology-26:pais_origen>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Samsung_S23_Ultra -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Samsung_S23_Ultra">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Smartphone"/>
+        <untitled-ontology-26:nombre_modelo_dispositivo>Samsung Galaxy S23 Ultra</untitled-ontology-26:nombre_modelo_dispositivo>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#SeguridadNeural -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#SeguridadNeural">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#FuncionAdicional"/>
+        <rdfs:label>Ahorro de Energía</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Snapdragon8gen2_Rendimiento -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Snapdragon8gen2_Rendimiento">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Rendimiento"/>
+        <untitled-ontology-26:benchmark_geekbench_multi rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5200</untitled-ontology-26:benchmark_geekbench_multi>
+        <untitled-ontology-26:benchmark_geekbench_single rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1500</untitled-ontology-26:benchmark_geekbench_single>
+        <untitled-ontology-26:consumo_max_wats rdf:datatype="http://www.w3.org/2001/XMLSchema#float">6.5</untitled-ontology-26:consumo_max_wats>
+        <untitled-ontology-26:consumo_reposo_wats rdf:datatype="http://www.w3.org/2001/XMLSchema#float">0.8</untitled-ontology-26:consumo_reposo_wats>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Snapdragon_8_gen_2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Snapdragon_8_gen_2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Procesador"/>
+        <untitled-ontology-26:esFabricadoPor rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Qualcomm"/>
+        <untitled-ontology-26:esUsadoEn rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Samsung_S23_Ultra"/>
+        <untitled-ontology-26:tieneFuncionAdicional rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#IA"/>
+        <untitled-ontology-26:tieneGPU rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Adreno_740"/>
+        <untitled-ontology-26:tieneNucleo rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Kryo_Gen2_Cores"/>
+        <untitled-ontology-26:tieneRendimiento rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Snapdragon8gen2_Rendimiento"/>
+        <untitled-ontology-26:utilizaArquitectura rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#ARMv9_A"/>
+        <untitled-ontology-26:anio_lanzamiento rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2022</untitled-ontology-26:anio_lanzamiento>
+        <untitled-ontology-26:es_disenio_personalizado rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</untitled-ontology-26:es_disenio_personalizado>
+        <untitled-ontology-26:implementa_throttling_termico rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</untitled-ontology-26:implementa_throttling_termico>
+        <untitled-ontology-26:memoria_cache_L3_MB rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">8</untitled-ontology-26:memoria_cache_L3_MB>
+        <untitled-ontology-26:modelo>Snapdragon 8 gen 2</untitled-ontology-26:modelo>
+        <untitled-ontology-26:optimizado_para_IA rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</untitled-ontology-26:optimizado_para_IA>
+        <untitled-ontology-26:soporta_overclocking rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">false</untitled-ontology-26:soporta_overclocking>
+        <untitled-ontology-26:tecnologia_nm rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</untitled-ontology-26:tecnologia_nm>
+        <untitled-ontology-26:tipo_gama>gama alta</untitled-ontology-26:tipo_gama>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#iPhone_14_Pro -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#iPhone_14_Pro">
+        <rdf:type rdf:resource="http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#Smartphone"/>
+        <untitled-ontology-26:nombre_modelo_dispositivo>Apple i Phone 14 Pro</untitled-ontology-26:nombre_modelo_dispositivo>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi -->
+

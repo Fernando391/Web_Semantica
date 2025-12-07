@@ -1,0 +1,204 @@
+.buscador-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    font-family: "Segoe UI", sans-serif;
+    color: #e9eef6;
+}
+
+.buscador-container .overlay {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    z-index: 0;
+}
+
+/* Header y main */
+.header-banner,
+.main-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+.header-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* título a la izquierda, selector a la derecha */
+    padding: 20px 40px;
+}
+
+.main-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+}
+
+/* Selector de idioma */
+.language-selector {
+    margin-left: 20px; /* separación desde el borde derecho */
+}
+
+.language-select {
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.1);
+    color: #e9eef6;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.language-select:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+.language-select:focus {
+    background: rgba(255,255,255,0.25);
+    box-shadow: 0 0 10px rgba(0,198,255,0.6);
+}
+
+/* Caja de búsqueda */
+.search-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 700px;
+    margin: 15px auto;
+    padding: 15px 25px;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.18);
+}
+
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    margin-left: 12px;
+    font-size: 18px;
+    background: transparent;
+    color: #e9eef6;
+}
+
+.search-btn {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: 8px;
+    transition: 0.25s;
+}
+
+.search-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Filtros */
+.filter-buttons {
+    margin-top: 5px;
+}
+
+.filter-btn {
+    margin: 30px 5px;
+    padding: 20px 18px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    background: #3d5a80;
+    color: white;
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+}
+
+/* Tarjetas */
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin: 30px auto;
+    max-width: 1200px;
+}
+
+.result-card.full-detail {
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(14px);
+    border-radius: 22px;
+    padding: 25px 30px;
+    border: 1px solid rgba(255,255,255,0.22);
+    box-shadow: 
+        0 8px 24px rgba(0,0,0,0.35), 
+        0 0 15px rgba(0, 198, 255, 0.7); 
+    transition: 0.3s ease;
+}
+
+.result-card.full-detail:hover {
+    transform: translateY(-5px);
+    box-shadow: 
+        0 14px 40px rgba(0,0,0,0.55), 
+        0 0 25px rgba(0, 198, 255,0.9); 
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.card-spec {
+    font-size: 15px;
+    margin: 5px 0;
+    color: #d3eaff;
+}
+
+.card-source-tag {
+    display: inline-block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.no-results {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 18px;
+    color: #ff6961;
+}
+
+/* Estado de carga y errores */
+.status-message {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 18px;
+}
+
+.status-message.error-message {
+    color: #ff6961;
+}
+
+/* Color para enlaces dentro de las tarjetas de resultados */
+.result-card a {
+    color: #00c6ff;
+    font-weight: 600; 
+    text-decoration: none; 
+    transition: color 0.3s ease;
+}
+
+.result-card a:hover {
+    color: #4dc2ff; 
+    text-decoration: underline; 
+}

@@ -1,0 +1,22 @@
+{
+  "PROCESADORES DE CELULARES": "PROCESADORES DE CELULARES",
+  "searchPlaceholder": "Search processor...",
+  "searchButton": "Buscar",
+  "combined": "Combinados",
+  "local": "Local",
+  "dbpedia": "DBpedia",             
+  "manufacturer": "Manufacturer",
+  "cores": "Cores",
+  "frequency": "Frequency",
+  "gpu": "GPU",
+  "viewDetails": "View Details",
+  "hideDetails": "Hide Details",
+  "dbpediaEntity": "DBpedia Entity",
+  "loading": "Loading...",
+  "noResults": "No results found",
+  "resultsFrom": "Showing {{count}} results from {{endpoint}}",
+  "owlLocal": "OWL Local",
+  "dbpediaLabel": "DBpedia"         
+}
+
+
