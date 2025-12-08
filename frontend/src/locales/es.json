@@ -1,22 +1,23 @@
 {
   "PROCESADORES DE CELULARES": "PROCESADORES DE CELULARES",
-  "searchPlaceholder": "Search processor...",
+  "searchPlaceholder": "Buscar procesador...",
   "searchButton": "Buscar",
   "combined": "Combinados",
   "local": "Local",
   "dbpedia": "DBpedia",             
-  "manufacturer": "Manufacturer",
-  "cores": "Cores",
-  "frequency": "Frequency",
+  "manufacturer": "Fabricante",
+  "cores": "Núcleos",
+  "frequency": "Frecuencia",
   "gpu": "GPU",
-  "viewDetails": "View Details",
-  "hideDetails": "Hide Details",
-  "dbpediaEntity": "DBpedia Entity",
-  "loading": "Loading...",
-  "noResults": "No results found",
-  "resultsFrom": "Showing {{count}} results from {{endpoint}}",
+  "viewDetails": "Ver detalles",
+  "hideDetails": "Ocultar detalles",
+  "dbpediaEntity": "Entidad DBpedia",
+  "loading": "Cargando...",
+  "noResults": "No se encontraron resultados",
+  "resultsFrom": "Mostrando {{count}} resultados de {{endpoint}}",
   "owlLocal": "OWL Local",
   "dbpediaLabel": "DBpedia"         
 }
+
 
 

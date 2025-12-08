@@ -31,17 +31,12 @@ const Buscador = () => {
         setExpandedCards(prev => ({ ...prev, [key]: !prev[key] }));
     };
 
-    // 🔥 Filtro sencillo:
-    // - local  → confío en el backend, muestro todo lo que venga
-    // - dbpedia → solo DBpedia Online
-    // - global → todo
     const getFilteredResults = () => {
         if (endpoint === "dbpedia") {
             return results.filter(
                 item => item.origen && item.origen.includes("DBpedia")
             );
         }
-        // local y global: no filtramos nada
         return results;
     };
 
@@ -78,15 +73,14 @@ const Buscador = () => {
     }, [searchTerm, endpoint, performSearch]);
 
     const renderCard = (item, index) => {
-        const key = item.uri || `local-item-${index}`;
+        // 🔹 Key única combinando URI e índice
+        const key = item.uri ? `${item.uri}-${index}` : `local-item-${index}`;
 
         const origen = item.origen || "";
-
         const isDbpedia = origen.includes("DBpedia");
-        const isLocal1 = origen.includes("Principal");   // Ontología Principal
-        const isLocal2 = origen.includes("Móviles");     // Ontología de Móviles
+        const isLocal1 = origen.includes("Principal");
+        const isLocal2 = origen.includes("Móviles");
         const isLocal = isLocal1 || isLocal2;
-
         const expanded = expandedCards[key];
 
         let contenido;
