@@ -31,34 +31,23 @@ const Buscador = () => {
         setExpandedCards(prev => ({ ...prev, [key]: !prev[key] }));
     };
 
-    const getFilteredResults = () => {
-        if (endpoint === "dbpedia") {
-            return results.filter(
-                item => item.origen && item.origen.includes("DBpedia")
-            );
-        }
-        return results;
-    };
-
-    const getEndpointPath = (currentEndpoint, term) => {
-        const finalTerm = term.trim() === "" ? "todos" : term.trim();
-        switch (currentEndpoint) {
-            case 'local': return `${API_BASE_URL}/busqueda-local/${finalTerm}`;
-            case 'dbpedia': return `${API_BASE_URL}/busqueda-dbpedia/${finalTerm}`;
-            case 'global':
-            default: return `${API_BASE_URL}/busqueda-global/${finalTerm}`;
-        }
-    };
-
+    // ============================================================
+    // FUNCIÓN PRINCIPAL DE BUSQUEDA (ARREGLADA)
+    // ============================================================
     const performSearch = useCallback(async (term, currentEndpoint) => {
         setLoading(true);
         setError(null);
+
         try {
-            const url = getEndpointPath(currentEndpoint, term);
+            const cleanTerm = term.trim() === "" ? "todos" : term.trim();
+            const url = `${API_BASE_URL}/busqueda-${currentEndpoint}/${cleanTerm}`;
+
             const response = await fetch(url);
-            if (!response.ok) throw new Error(`Error ${response.status}: La API no respondió correctamente.`);
+            if (!response.ok)
+                throw new Error(`Error ${response.status}: La API no respondió correctamente.`);
+
             const data = await response.json();
-            setResults(data.resultados || []);
+            setResults(data.resultados ?? []);
         } catch (err) {
             console.error("Error en la búsqueda:", err);
             setError(err.message);
@@ -68,22 +57,32 @@ const Buscador = () => {
         }
     }, []);
 
+    // ============================================================
+    // CONTROL DE RECOMENDADOS SEGÚN APARTADO
+    // ============================================================
     useEffect(() => {
-        performSearch(searchTerm, endpoint);
-    }, [searchTerm, endpoint, performSearch]);
+        // si no hay texto -> mostrar recomendados siempre
+        if (searchTerm.trim() === "") {
+            performSearch("", endpoint);
+        }
+    }, [endpoint, searchTerm, performSearch]);
 
+    // ============================================================
+    // RENDER TARJETAS
+    // ============================================================
     const renderCard = (item, index) => {
-        // 🔹 Key única combinando URI e índice
         const key = item.uri ? `${item.uri}-${index}` : `local-item-${index}`;
-
         const origen = item.origen || "";
+
         const isDbpedia = origen.includes("DBpedia");
         const isLocal1 = origen.includes("Principal");
         const isLocal2 = origen.includes("Móviles");
         const isLocal = isLocal1 || isLocal2;
+
         const expanded = expandedCards[key];
 
         let contenido;
+
         if (isLocal) {
             const datos = item.detalles_completos || {};
             const cores = datos.numeroDeNucleos || "N/A";
@@ -93,6 +92,7 @@ const Buscador = () => {
             contenido = (
                 <>
                     <p className="card-spec"><strong>{t('manufacturer')}:</strong> {item.fabricante}</p>
+
                     {expanded && (
                         <>
                             <p className="card-spec"><strong>{t('cores')}:</strong> {cores}</p>
@@ -100,6 +100,7 @@ const Buscador = () => {
                             <p className="card-spec"><strong>{t('gpu')}:</strong> {gpu}</p>
                         </>
                     )}
+
                     <button className="detail-btn" onClick={() => toggleCard(key)}>
                         {expanded ? t('hideDetails') : t('viewDetails')}
                     </button>
@@ -111,9 +112,10 @@ const Buscador = () => {
                     <p className="card-spec">
                         <strong>URI:</strong>{" "}
                         <a href={item.uri} target="_blank" rel="noopener noreferrer">
-                            {item.uri.substring(item.uri.lastIndexOf('/') + 1)}
+                            {item.uri.split("/").pop()}
                         </a>
                     </p>
+
                     <p className="card-spec">{t('dbpediaEntity')}</p>
                 </>
             );
@@ -124,50 +126,34 @@ const Buscador = () => {
         let tagEmoji = "";
 
         if (isLocal1) {
-            tagText = "LOCAL 1";
-            tagBg = "#22c55e";
-            tagEmoji = "📗";
+            tagText = "LOCAL 1"; tagBg = "#22c55e"; tagEmoji = "📗";
         } else if (isLocal2) {
-            tagText = "LOCAL 2";
-            tagBg = "#3b82f6";
-            tagEmoji = "📘";
+            tagText = "LOCAL 2"; tagBg = "#3b82f6"; tagEmoji = "📘";
         } else if (isDbpedia) {
-            tagText = t('dbpediaLabel');
-            tagBg = "#0ea5e9";
-            tagEmoji = "🌐";
+            tagText = t('dbpediaLabel'); tagBg = "#0ea5e9"; tagEmoji = "🌐";
         } else {
-            tagText = origen || "Unknown";
-            tagBg = "#6b7280";
-            tagEmoji = "❓";
+            tagText = origen || "Unknown"; tagBg = "#6b7280"; tagEmoji = "❓";
         }
 
         return (
-            <div
-                key={key}
-                className={`result-card full-detail ${isDbpedia ? "card-dbpedia" : "card-local"}`}
-            >
-                <span
-                    className="card-source-tag"
+            <div key={key} className={`result-card full-detail ${isDbpedia ? "card-dbpedia" : "card-local"}`}>
+                <span className="card-source-tag"
                     style={{
                         backgroundColor: tagBg,
                         color: "white",
                         padding: "4px 10px",
                         borderRadius: "999px",
                         fontSize: "0.8rem",
-                        fontWeight: "bold",
                         display: "inline-flex",
                         alignItems: "center",
-                        gap: "6px",
-                        marginBottom: "8px"
-                    }}
-                >
-                    <span>{tagEmoji}</span>
-                    <span>{tagText}</span>
+                        gap: "6px"
+                    }}>
+                    <span>{tagEmoji}</span> <span>{tagText}</span>
                 </span>
 
                 <h3 className="card-title">
-                    <FontAwesomeIcon icon={isDbpedia ? faGlobe : faMicrochip} className="title-icon" />{" "}
-                    {item.modelo}
+                    <FontAwesomeIcon icon={isDbpedia ? faGlobe : faMicrochip} />
+                    {" "}{item.modelo}
                 </h3>
 
                 {contenido}
@@ -175,39 +161,38 @@ const Buscador = () => {
         );
     };
 
-    const visibleResults = getFilteredResults();
-
+    // ============================================================
+    // UI
+    // ============================================================
     return (
-        <div
-            className="buscador-container"
-            style={{
-                backgroundImage: `url(${fondo})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                minHeight: '100vh',
-            }}
-        >
+        <div className="buscador-container" style={{
+            backgroundImage: `url(${fondo})`,
+            backgroundSize: 'cover',
+            minHeight: '100vh'
+        }}>
             <div className="overlay"></div>
 
+            {/* HEADER */}
             <div className="header-banner">
                 <h1 className="main-title">{t('PROCESADORES DE CELULARES')}</h1>
 
                 <div className="search-box">
                     <FontAwesomeIcon icon={faSearch} className="search-icon" />
+
                     <input
                         type="text"
                         className="search-input"
                         placeholder={t('searchPlaceholder')}
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
-                        onKeyPress={(e) => { if (e.key === "Enter") performSearch(searchTerm, endpoint); }}
                     />
+
                     <button className="search-btn" onClick={() => performSearch(searchTerm, endpoint)}>
                         {t('searchButton')}
                     </button>
                 </div>
 
+                {/* FILTROS */}
                 <div className="filter-buttons">
                     {[
                         { ep: "global", label: t('combined'), icon: faGlobe },
@@ -238,28 +223,31 @@ const Buscador = () => {
                 </div>
             </div>
 
+            {/* RESULTADOS */}
             <div className="main-content">
                 {loading && (
                     <div className="status-message">
                         <FontAwesomeIcon icon={faSpinner} spin /> {t('loading')}
                     </div>
                 )}
+
                 {!loading && error && (
                     <div className="status-message error-message">
                         <FontAwesomeIcon icon={faCircleExclamation} /> {error}
                     </div>
                 )}
+
                 {!loading && !error && (
                     <>
                         <div className="results-summary">
-                            {t('resultsFrom', { count: visibleResults.length, endpoint: endpoint.toUpperCase() })}
+                            {t('resultsFrom', { count: results.length, endpoint: endpoint.toUpperCase() })}
                         </div>
+
                         <div className="results-grid">
-                            {visibleResults.length > 0 ? (
-                                visibleResults.map(renderCard)
-                            ) : (
-                                <p className="no-results">{t('noResults')}</p>
-                            )}
+                            {results.length > 0
+                                ? results.map(renderCard)
+                                : <p className="no-results">{t('noResults')}</p>
+                            }
                         </div>
                     </>
                 )}

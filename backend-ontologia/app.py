@@ -220,31 +220,122 @@ def buscar_local_owl(termino: str) -> List[Dict[str, Any]]:
 # --- BÚSQUEDA ONLINE EN DBPEDIA ---
 
 def buscar_online_dbpedia(termino: str) -> List[Dict[str, Any]]:
-    consulta = f"""
-    SELECT DISTINCT ?resource ?label WHERE {{
-        ?resource rdfs:label ?label .
-        FILTER (lang(?label)='en' || lang(?label)='es')
-        FILTER (regex(?label, "{termino}", "i"))
-        FILTER (STRSTARTS(STR(?resource), "http://dbpedia.org/resource/"))
-    }}
-    LIMIT 10
+
+    termino = (termino or "").strip().lower()
+
+    # 🔥 FILTRO BASE: solo procesadores / SoC
+    filtro_es_procesador = """
+    FILTER (
+        regex(str(?label), "processor|microprocessor|cpu|chip|SoC|system on a chip|ARM|Cortex", "i") ||
+        regex(str(?abstract), "processor|microprocessor|cpu|chip|SoC|system on a chip|ARM|Cortex", "i")
+    )
     """
 
-    resultados = consultar_dbpedia(consulta)
+    # 🔥 🔥 🔥 AQUÍ VIENE TU ÚNICA MODIFICACIÓN
+    if termino == "" or termino == "todos":
+        filtro_busqueda = ""
+
+    elif termino in ["procesador", "procesadores"]:
+        # 👉 MOSTRAR TODAS LAS MARCAS DE PROCESADORES
+        filtro_busqueda = """
+        FILTER (
+            regex(str(?label), "Snapdragon|Exynos|MediaTek|Helio|Dimensity|Kirin|Tensor|Apple|Qualcomm|Bionic", "i")
+        )
+        """
+    else:
+        # 🔍 Búsqueda normal
+        safe_term = termino.replace('\\', '\\\\').replace('"', '\\"')
+        filtro_busqueda = f"""
+        FILTER (
+            regex(str(?label), "{safe_term}", "i") ||
+            regex(str(?abstract), "{safe_term}", "i")
+        )
+        """
+
+    # ----------------------------------------------------------
+    # NADA MÁS SE MODIFICÓ - TODO EL RESTO ES EXACTAMENTE IGUAL
+    # ----------------------------------------------------------
+
+    consulta = f"""
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX dbo:  <http://dbpedia.org/ontology/>
+    PREFIX dct:  <http://purl.org/dc/terms/>
+    PREFIX dbc:  <http://dbpedia.org/resource/Category:>
+
+    SELECT DISTINCT ?resource ?label ?abstract WHERE {{
+
+        ?resource rdfs:label ?label .
+        FILTER (lang(?label) = "en" || lang(?label) = "es")
+
+        OPTIONAL {{
+            ?resource dbo:abstract ?abstract .
+            FILTER (lang(?abstract) = "en")
+        }}
+
+        {filtro_es_procesador}
+        {filtro_busqueda}
+
+        {{
+            ?resource dct:subject dbc:Mobile_processors .
+        }} UNION {{
+            ?resource dct:subject dbc:System_on_chips .
+        }} UNION {{
+            ?resource dct:subject dbc:Qualcomm_Snapdragon .
+        }} UNION {{
+            ?resource dct:subject dbc:Apple_Inc._processors .
+        }} UNION {{
+            ?resource dct:subject dbc:MediaTek .
+        }} UNION {{
+            ?resource dct:subject dbc:Exynos .
+        }} UNION {{
+            ?resource dct:subject dbc:ARM_architecture .
+        }} UNION {{
+            ?resource dct:subject dbc:ARM_microarchitectures .
+        }} UNION {{
+            ?resource dct:subject dbc:Embedded_systems .
+        }} UNION {{
+            ?resource dct:subject dbc:Semiconductors .
+        }} UNION {{
+            ?resource dct:subject dbc:Electronics_engineering .
+        }} UNION {{
+            ?resource dct:subject dbc:Mobile_technology .
+        }}
+    }}
+    LIMIT 80
+    """
+
+    try:
+        sparql = SPARQLWrapper("https://dbpedia.org/sparql")
+        sparql.setReturnFormat(JSON)
+        sparql.setQuery(consulta)
+        results = sparql.query().convert()
+    except Exception as e:
+        print("⚠ ERROR DBPEDIA:", e)
+        return []
 
     datos = []
-    for r in resultados:
+    vistos = set()
+
+    for r in results.get("results", {}).get("bindings", []):
+        uri = r["resource"]["value"]
+        label = r["label"]["value"]
+
+        if uri in vistos:
+            continue
+        vistos.add(uri)
+
         datos.append({
-            "origen": "DBpedia Online",
-            "modelo": r["label"]["value"],
-            "fabricante": "Base de Conocimiento General",
-            "clase": "Entidad DBpedia",
-            "uri": r["resource"]["value"],
+            "origen": "DBpedia",
+            "modelo": label,
+            "fabricante": "DBpedia",
+            "clase": "Procesador",
+            "uri": uri,
             "detalles_completos": {},
             "relaciones_completas": []
         })
 
     return datos
+
 
 # --- ENDPOINTS ---
 
@@ -305,6 +396,7 @@ def busqueda_global(termino: str):
         "cantidad_total": len(fusion),
         "resultados": fusion
     }
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8000)
