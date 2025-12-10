@@ -14,7 +14,7 @@ import fondo from '../assets/fondo.png';
 import { useTranslation } from 'react-i18next';
 import i18n from '../i18n';
 
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "http://127.0.0.1:8001";
 
 const Buscador = () => {
     const { t } = useTranslation();

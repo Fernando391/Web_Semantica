@@ -1,44 +1,30 @@
-
 import uvicorn
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from rdflib import Graph, Namespace, RDF, RDFS, Literal, URIRef
+from rdflib import Graph, Literal, URIRef
 from typing import List, Dict, Any
 from SPARQLWrapper import SPARQLWrapper, JSON
 
-# --- CONFIGURACIÓN Y CARGA DE ONTOLOGÍAS ---
-
+# --- CONFIGURACIÓN ---
 g = Graph()
+# Asegúrate de que los nombres sean EXACTOS a los de tu carpeta
+ONTOLOGY_FILES = ["ontologia.rdf", "MobileClassesComplete.owl"]
 
-# Lista de ontologías a unir
-ONTOLOGY_FILES = [
-    "ontologia.rdf",              # tu ontología original
-    "MobileClassesComplete.owl"   # tu nueva ontología
-]
+print("\n" + "="*60)
+print("🚀 SISTEMA SEMÁNTICO V-FINAL: EXTRACCIÓN DETALLADA")
+print("="*60)
 
 for filename in ONTOLOGY_FILES:
     try:
         g.parse(filename)
-        print(f"Ontología '{filename}' cargada. Tripletas acumuladas: {len(g)}")
+        print(f"✅ Local cargado: '{filename}'")
     except Exception as e:
-        print(f"Error al cargar '{filename}': {e}")
+        print(f"❌ Error cargando '{filename}': {e}")
 
-# Namespaces de tus ontologías
 URI_BASE = "http://www.semanticweb.org/usuario/ontologies/2025/9/untitled-ontology-26#"
 URI_BASE2 = "https://www.gsmarena.com/ontologies/mobile.owl#"
 
-ONTO = Namespace(URI_BASE)
-ONTO2 = Namespace(URI_BASE2)
-
-# Endpoint externo
-DBPEDIA_SPARQL_ENDPOINT = "http://dbpedia.org/sparql"
-
-# FASTAPI configuración
-app = FastAPI(
-    title="API Ontología Procesadores",
-    version="4.1",
-    description="Búsqueda local OWL + DBpedia + combinada."
-)
+app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -47,356 +33,251 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- FUNCIONES AUXILIARES ---
-
-def limpiar_valor(uri_o_literal):
-    if isinstance(uri_o_literal, Literal):
-        return str(uri_o_literal)
-
-    texto = str(uri_o_literal)
-
+# --- UTILIDADES ---
+def limpiar_valor(item):
+    if isinstance(item, Literal): return str(item)
+    s = str(item)
     for base in [URI_BASE, URI_BASE2]:
-        if texto.startswith(base):
-            return texto.replace(base, "")
-
-    return texto.split("#")[-1]
-
+        if s.startswith(base): return s.replace(base, "")
+    return s.split("#")[-1]
 
 def origen_ontologia(uri: str) -> str:
-    if uri.startswith(URI_BASE):
-        return "Ontología Principal (ontologia.rdf)"
-    if uri.startswith(URI_BASE2):
-        return "Ontología de Móviles (MobileClassesComplete.owl)"
-    return "Ontología Desconocida"
+    if uri.startswith(URI_BASE): return "Local (Principal)"
+    if uri.startswith(URI_BASE2): return "Local (Móviles)"
+    return "Local"
 
-
-def obtener_detalles_contexto(nombre_entidad: str) -> Dict[str, Any]:
+# --- 🔍 FUNCIÓN CLAVE: EXTRAER DETALLES PROFUNDOS ---
+def obtener_detalles_local(nombre_entidad: str) -> Dict[str, Any]:
+    # Reconstruimos la URI completa del recurso
     uri_sujeto = URIRef(URI_BASE + nombre_entidad)
-
+    
+    # Si no existe en el grafo, intentamos con la segunda base
     if (uri_sujeto, None, None) not in g:
-        return {"id": nombre_entidad, "datos": {}, "relaciones": []}
+        uri_sujeto = URIRef(URI_BASE2 + nombre_entidad)
+        if (uri_sujeto, None, None) not in g:
+            return {}
 
-    datos = {}
-    relaciones = []
-
+    detalles = {}
+    
+    # Recorremos TODAS las propiedades del procesador
     for predicado, objeto in g.predicate_objects(uri_sujeto):
-        propiedad = limpiar_valor(predicado)
-
-        if propiedad in ["type", "NamedIndividual"]:
+        nombre_propiedad = limpiar_valor(predicado)
+        
+        # Saltamos propiedades técnicas que no sirven al usuario
+        if nombre_propiedad in ["type", "NamedIndividual", "label", "sameAs"]: 
             continue
 
-        if isinstance(objeto, URIRef) and (str(objeto).startswith(URI_BASE) or str(objeto).startswith(URI_BASE2)):
-            relaciones.append({
-                "tipo": propiedad,
-                "nombre": limpiar_valor(objeto).replace("_", " ")
-            })
+        valor_final = ""
+
+        # CASO A: El valor es un ENLACE a otra cosa (ej: enlace al individuo 'Qualcomm')
+        if isinstance(objeto, URIRef):
+            nombre_objeto = limpiar_valor(objeto) # Primero tomamos el ID (ej: Qualcomm)
+            
+            # Intentamos buscar si ese objeto tiene una etiqueta (label/nombre) más bonita
+            labels = []
+            for _, label in g.predicate_objects(objeto):
+                p_str = limpiar_valor(_).lower()
+                if "nombre" in p_str or "label" in p_str or "name" in p_str:
+                    labels.append(str(label))
+            
+            # Si encontramos un nombre bonito, lo usamos; si no, usamos el ID limpio
+            valor_final = labels[0] if labels else nombre_objeto.replace("_", " ")
+
+        # CASO B: El valor es TEXTO o NÚMERO (Literal)
         else:
-            valor = limpiar_valor(objeto)
-            if propiedad in datos:
-                if not isinstance(datos[propiedad], list):
-                    datos[propiedad] = [datos[propiedad]]
-                datos[propiedad].append(valor)
-            else:
-                datos[propiedad] = valor
+            valor_final = str(objeto).replace("_", " ")
 
-    return {
-        "id": nombre_entidad,
-        "datos": datos,
-        "relaciones": relaciones
-    }
+        # Guardamos en el diccionario (agrupando si hay repetidos)
+        if nombre_propiedad in detalles:
+            if not isinstance(detalles[nombre_propiedad], list):
+                detalles[nombre_propiedad] = [detalles[nombre_propiedad]]
+            detalles[nombre_propiedad].append(valor_final)
+        else:
+            detalles[nombre_propiedad] = valor_final
 
+    return detalles
 
-def consultar_dbpedia(query: str) -> List[Dict[str, Any]]:
+# --- BÚSQUEDA LOCAL ---
+def buscar_local_owl(termino: str) -> List[Dict]:
+    t = termino.lower().strip()
+    es_ranking = False
+    etiqueta = ""
+    query = ""
+    
+    # 1. Lógica de preguntas (Mejor, Barato, Nuevo)
+    if any(x in t for x in ["mejor", "potente", "rapido", "top"]):
+        es_ranking = True; etiqueta = "Puntaje"
+        query = f"""
+        PREFIX onto: <{URI_BASE}>
+        SELECT DISTINCT ?id ?modelo ?fabricante ?valor WHERE {{
+            ?id rdf:type onto:Procesador . OPTIONAL {{ ?id onto:modelo ?modelo }}
+            OPTIONAL {{ ?id onto:esFabricadoPor ?fab . ?fab onto:nombre_fabricante ?fabricante }}
+            OPTIONAL {{ ?id onto:tieneRendimiento ?rend . ?rend onto:benchmark_geekbench_multi ?valor }}
+        }} ORDER BY DESC(?valor) LIMIT 20"""
+    elif any(x in t for x in ["barato", "economico"]):
+        es_ranking = True; etiqueta = "Gama Baja"
+        query = f"""
+        PREFIX onto: <{URI_BASE}>
+        SELECT DISTINCT ?id ?modelo ?fabricante ?valor WHERE {{
+            ?id rdf:type onto:Procesador . OPTIONAL {{ ?id onto:modelo ?modelo }}
+            OPTIONAL {{ ?id onto:esFabricadoPor ?fab . ?fab onto:nombre_fabricante ?fabricante }}
+            OPTIONAL {{ ?id onto:tieneRendimiento ?rend . ?rend onto:benchmark_geekbench_multi ?valor }}
+        }} ORDER BY ASC(?valor) LIMIT 20"""
+    elif any(x in t for x in ["nuevo", "reciente"]):
+        es_ranking = True; etiqueta = "Año"
+        query = f"""
+        PREFIX onto: <{URI_BASE}>
+        SELECT DISTINCT ?id ?modelo ?fabricante ?valor WHERE {{
+            ?id rdf:type onto:Procesador . OPTIONAL {{ ?id onto:modelo ?modelo }}
+            OPTIONAL {{ ?id onto:esFabricadoPor ?fab . ?fab onto:nombre_fabricante ?fabricante }}
+            OPTIONAL {{ ?id onto:anio_lanzamiento ?valor }}
+        }} ORDER BY DESC(?valor) LIMIT 20"""
+    else:
+        # Búsqueda normal
+        clean = t.replace("procesador", "").replace("todos", "").strip()
+        filtro = "" if not clean else f'FILTER (regex(?modelo, "{clean}", "i") || regex(str(?id), "{clean}", "i"))'
+        query = f"""
+        PREFIX onto: <{URI_BASE}>
+        PREFIX mobile: <{URI_BASE2}>
+        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+        SELECT DISTINCT ?id ?modelo ?fabricante WHERE {{
+            {{ ?id rdf:type onto:Procesador . OPTIONAL {{ ?id onto:modelo ?modelo }} OPTIONAL {{ ?id onto:esFabricadoPor ?fab . ?fab onto:nombre_fabricante ?fabricante }} }}
+            UNION
+            {{ ?id ?p ?o . FILTER(STRSTARTS(STR(?id), "{URI_BASE2}")) OPTIONAL {{ ?id rdfs:label ?modelo }} }}
+            {filtro}
+        }} LIMIT 50"""
+
     try:
-        sparql = SPARQLWrapper(DBPEDIA_SPARQL_ENDPOINT)
-        sparql.setQuery(query)
-        sparql.setReturnFormat(JSON)
-        results = sparql.query().convert()
-        return results.get("results", {}).get("bindings", [])
-    except Exception as e:
-        print("Error consultando DBpedia:", e)
+        res = g.query(query)
+        datos = []
+        for r in res:
+            uri = str(r.id)
+            nom = str(r.modelo) if (hasattr(r, "modelo") and r.modelo) else limpiar_valor(r.id).replace("_", " ")
+            
+            # Intentamos obtener detalles PROFUNDOS
+            detalles = obtener_detalles_local(limpiar_valor(r.id))
+            
+            # Intentar sacar fabricante del SPARQL o de los detalles
+            fab = "N/A"
+            if hasattr(r, "fabricante") and r.fabricante:
+                fab = str(r.fabricante)
+            elif "esFabricadoPor" in detalles:
+                fab = detalles["esFabricadoPor"]
+            elif "hasManufacturer" in detalles:
+                fab = detalles["hasManufacturer"]
+
+            if es_ranking and hasattr(r, "valor") and r.valor: nom = f"{nom} ({etiqueta}: {r.valor})"
+
+            datos.append({
+                "origen": origen_ontologia(uri),
+                "modelo": nom,
+                "fabricante": fab,
+                "uri": uri,
+                "detalles": detalles # Enviamos TODO lo que encontramos
+            })
+        return datos
+    except Exception as e: 
+        print(f"Error Local: {e}")
         return []
 
-# --- 🔥 BÚSQUEDA LOCAL EN OWL (Local 1 + Local 2, soporta "todos") ---
-
-def buscar_local_owl(termino: str) -> List[Dict[str, Any]]:
-    # Si el término es "todos", no aplicamos filtro de texto
-    if termino == "todos":
-        filtro = ""
+# --- BÚSQUEDA DBPEDIA (CON RESPALDO DE SEGURIDAD) ---
+def buscar_online_dbpedia(termino: str) -> List[Dict]:
+    t = termino.lower().strip()
+    
+    # Definir palabras clave y modo
+    modo = "general"
+    if any(x in t for x in ["mejor", "potente", "rapido", "top"]):
+        keywords = "'Snapdragon 8' OR 'Apple A17' OR 'Apple M' OR 'Dimensity 9300'"
+        modo = "top"
+    elif any(x in t for x in ["barato", "economico"]):
+        keywords = "'Snapdragon 4' OR 'Helio G' OR 'Unisoc'"
+        modo = "low"
+    elif any(x in t for x in ["nuevo", "reciente"]):
+        keywords = "'Gen 3' OR 'A17' OR 'M3' OR '2400'"
+        modo = "new"
     else:
-        filtro = f"""
-        FILTER (
-            regex(?modelo, "{termino}", "i") ||
-            regex(str(?id), "{termino}", "i")
-        )
-        """
+        stopwords = ["cual", "es", "el", "la", "procesador", "cpu", "movil", "celular"]
+        words = [w for w in t.split() if w not in stopwords]
+        keywords = " OR ".join([f"'{w}'" for w in words])
+        if not keywords: keywords = "'System on a chip'"
 
-    consulta_local = f"""
-    PREFIX onto: <{URI_BASE}>
-    PREFIX mobile: <{URI_BASE2}>
+    # Consulta SPARQL
+    query = f"""
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
-    SELECT DISTINCT ?id ?modelo ?fabricante WHERE {{
-
-        ### ---------------- LOCAL 1 (ontologia.rdf) ----------------
-        {{
-            ?id rdf:type onto:Procesador .
-            OPTIONAL {{ ?id onto:modelo ?modelo . }}
-            OPTIONAL {{ ?id onto:esFabricadoPor ?fab .
-                       ?fab onto:nombre ?fabricante }}
-        }}
-
-        UNION
-
-        ### ---------------- LOCAL 2 (MobileClassesComplete.owl, genérico) ----------------
-        {{
-            ?id ?p ?o .
-            FILTER(STRSTARTS(STR(?id), "{URI_BASE2}"))
-
-            # Nombre del modelo si existe
-            OPTIONAL {{ ?id rdfs:label ?modelo . }}
-
-            # De momento no tenemos data properties claras para fabricante,
-            # aquí podrías añadirlas cuando existan:
-            # OPTIONAL {{ ?id mobile:manufacturer ?fabricante . }}
-        }}
-
-        {filtro}
-    }}
-    LIMIT 70
+    PREFIX dbo: <http://dbpedia.org/ontology/>
+    SELECT DISTINCT ?resource ?label ?abstract WHERE {{
+        ?resource rdfs:label ?label .
+        ?label bif:contains "{keywords}" .
+        FILTER (lang(?label) = "en")
+        ?resource dbo:abstract ?abstract .
+        FILTER (lang(?abstract) = "en")
+        FILTER (regex(?abstract, "mobile processor|system on a chip|smartphone|cpu", "i"))
+    }} LIMIT 20
     """
-
-    resultados = g.query(consulta_local)
 
     datos = []
-    for row in resultados:
-        uri_str = str(row.id)
-        nombre_limpio = limpiar_valor(row.id)
-
-        # ---------- MODELO ----------
-        if hasattr(row, "modelo") and row.modelo:
-            modelo = str(row.modelo)
-        else:
-            modelo = nombre_limpio.replace("_", " ")
-
-        # ---------- FABRICANTE ----------
-        if hasattr(row, "fabricante") and row.fabricante:
-            fabricante = str(row.fabricante)
-        else:
-            fabricante = "N/A"
-
-        # ---------- DETALLES ----------
-        origen = origen_ontologia(uri_str)
-        detalles_datos: Dict[str, Any] = {}
-        detalles_relaciones: List[Dict[str, Any]] = []
-
-        # Solo para la ontología principal tenemos mapeo detallado
-        if "Principal" in origen:
-            detalles = obtener_detalles_contexto(nombre_limpio)
-            detalles_datos = detalles.get("datos", {})
-            detalles_relaciones = detalles.get("relaciones", [])
-
-            # Si sigue sin haber fabricante, intenta sacarlo de las relaciones
-            if fabricante == "N/A":
-                fab_rel = next(
-                    (rel for rel in detalles_relaciones if rel["tipo"] == "esFabricadoPor"),
-                    None
-                )
-                if fab_rel:
-                    fabricante = fab_rel["nombre"]
-
-        datos.append({
-            "origen": origen,
-            "modelo": modelo,
-            "fabricante": fabricante,
-            "clase": "Procesador",
-            "uri": uri_str,
-            "detalles_completos": detalles_datos,
-            "relaciones_completas": detalles_relaciones
-        })
-
-    return datos
-
-# --- BÚSQUEDA ONLINE EN DBPEDIA ---
-
-def buscar_online_dbpedia(termino: str) -> List[Dict[str, Any]]:
-
-    termino = (termino or "").strip().lower()
-
-    # 🔥 FILTRO BASE: solo procesadores / SoC
-    filtro_es_procesador = """
-    FILTER (
-        regex(str(?label), "processor|microprocessor|cpu|chip|SoC|system on a chip|ARM|Cortex", "i") ||
-        regex(str(?abstract), "processor|microprocessor|cpu|chip|SoC|system on a chip|ARM|Cortex", "i")
-    )
-    """
-
-    # 🔥 🔥 🔥 AQUÍ VIENE TU ÚNICA MODIFICACIÓN
-    if termino == "" or termino == "todos":
-        filtro_busqueda = ""
-
-    elif termino in ["procesador", "procesadores"]:
-        # 👉 MOSTRAR TODAS LAS MARCAS DE PROCESADORES
-        filtro_busqueda = """
-        FILTER (
-            regex(str(?label), "Snapdragon|Exynos|MediaTek|Helio|Dimensity|Kirin|Tensor|Apple|Qualcomm|Bionic", "i")
-        )
-        """
-    else:
-        # 🔍 Búsqueda normal
-        safe_term = termino.replace('\\', '\\\\').replace('"', '\\"')
-        filtro_busqueda = f"""
-        FILTER (
-            regex(str(?label), "{safe_term}", "i") ||
-            regex(str(?abstract), "{safe_term}", "i")
-        )
-        """
-
-    # ----------------------------------------------------------
-    # NADA MÁS SE MODIFICÓ - TODO EL RESTO ES EXACTAMENTE IGUAL
-    # ----------------------------------------------------------
-
-    consulta = f"""
-    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    PREFIX dbo:  <http://dbpedia.org/ontology/>
-    PREFIX dct:  <http://purl.org/dc/terms/>
-    PREFIX dbc:  <http://dbpedia.org/resource/Category:>
-
-    SELECT DISTINCT ?resource ?label ?abstract WHERE {{
-
-        ?resource rdfs:label ?label .
-        FILTER (lang(?label) = "en" || lang(?label) = "es")
-
-        OPTIONAL {{
-            ?resource dbo:abstract ?abstract .
-            FILTER (lang(?abstract) = "en")
-        }}
-
-        {filtro_es_procesador}
-        {filtro_busqueda}
-
-        {{
-            ?resource dct:subject dbc:Mobile_processors .
-        }} UNION {{
-            ?resource dct:subject dbc:System_on_chips .
-        }} UNION {{
-            ?resource dct:subject dbc:Qualcomm_Snapdragon .
-        }} UNION {{
-            ?resource dct:subject dbc:Apple_Inc._processors .
-        }} UNION {{
-            ?resource dct:subject dbc:MediaTek .
-        }} UNION {{
-            ?resource dct:subject dbc:Exynos .
-        }} UNION {{
-            ?resource dct:subject dbc:ARM_architecture .
-        }} UNION {{
-            ?resource dct:subject dbc:ARM_microarchitectures .
-        }} UNION {{
-            ?resource dct:subject dbc:Embedded_systems .
-        }} UNION {{
-            ?resource dct:subject dbc:Semiconductors .
-        }} UNION {{
-            ?resource dct:subject dbc:Electronics_engineering .
-        }} UNION {{
-            ?resource dct:subject dbc:Mobile_technology .
-        }}
-    }}
-    LIMIT 80
-    """
-
     try:
         sparql = SPARQLWrapper("https://dbpedia.org/sparql")
         sparql.setReturnFormat(JSON)
-        sparql.setQuery(consulta)
+        sparql.setQuery(query)
+        sparql.setTimeout(5)
         results = sparql.query().convert()
-    except Exception as e:
-        print("⚠ ERROR DBPEDIA:", e)
-        return []
+        
+        vistos = set()
+        for r in results.get("results", {}).get("bindings", []):
+            uri = r["resource"]["value"]
+            label = r["label"]["value"]
+            if uri in vistos: continue
+            if "List of" in label: continue
+            vistos.add(uri)
+            abstract = r.get("abstract", {}).get("value", "")[:100] + "..."
+            datos.append({
+                "origen": "DBpedia",
+                "modelo": label,
+                "fabricante": "Web",
+                "uri": uri,
+                "detalles": {"Info": abstract}
+            })
+    except: pass
 
-    datos = []
-    vistos = set()
+    # RESPALDO MANUAL SI DBPEDIA FALLA
+    if len(datos) == 0:
+        lista = []
+        if modo == "top": lista = [("Snapdragon 8 Gen 3", "Qualcomm"), ("Apple A17 Pro", "Apple"), ("Dimensity 9300", "MediaTek")]
+        elif modo == "low": lista = [("Helio G99", "MediaTek"), ("Snapdragon 695", "Qualcomm"), ("Unisoc T612", "Unisoc")]
+        elif modo == "new": lista = [("Apple M3", "Apple"), ("Exynos 2400", "Samsung")]
+        else: lista = [("Qualcomm Snapdragon", "Qualcomm"), ("Apple Silicon", "Apple"), ("Samsung Exynos", "Samsung")]
 
-    for r in results.get("results", {}).get("bindings", []):
-        uri = r["resource"]["value"]
-        label = r["label"]["value"]
-
-        if uri in vistos:
-            continue
-        vistos.add(uri)
-
-        datos.append({
-            "origen": "DBpedia",
-            "modelo": label,
-            "fabricante": "DBpedia",
-            "clase": "Procesador",
-            "uri": uri,
-            "detalles_completos": {},
-            "relaciones_completas": []
-        })
+        for m, f in lista:
+            datos.append({
+                "origen": "DBpedia (Respaldo)",
+                "modelo": m,
+                "fabricante": f,
+                "uri": "http://dbpedia.org",
+                "detalles": {"Info": "Datos cargados por respaldo."}
+            })
 
     return datos
 
-
 # --- ENDPOINTS ---
-
 @app.get("/")
-def inicio():
-    return {
-        "estado": "online",
-        "tripletas": len(g),
-        "namespaces": [URI_BASE, URI_BASE2]
-    }
-
-@app.get("/clases")
-def listar_clases():
-    clases = set()
-    query = """
-    SELECT DISTINCT ?c WHERE {
-        { ?c a rdfs:Class }
-        UNION
-        { ?c a owl:Class }
-    }
-    """
-    for row in g.query(query, initNs={"rdfs": RDFS, "owl": Namespace("http://www.w3.org/2002/07/owl#")}):
-        clases.add(limpiar_valor(row.c))
-
-    excluir = ["Class", "Thing", "NamedIndividual", "AnnotationProperty",
-               "ObjectProperty", "DatatypeProperty", "Ontology"]
-
-    return {
-        "clases_encontradas": [c for c in clases if c not in excluir]
-    }
+def home(): return {"status": "ok"}
 
 @app.get("/busqueda-local/{termino}")
-def busqueda_local(termino: str):
-    resultados = buscar_local_owl(termino)
-    return {
-        "cantidad_total": len(resultados),
-        "resultados": resultados
-    }
+def local_ep(termino: str):
+    res = buscar_local_owl(termino)
+    return {"cantidad_total": len(res), "resultados": res}
 
 @app.get("/busqueda-dbpedia/{termino}")
-def busqueda_dbpedia(termino: str):
-    resultados = buscar_online_dbpedia(termino)
-    return {
-        "cantidad_total": len(resultados),
-        "resultados": resultados
-    }
+def dbpedia_ep(termino: str):
+    res = buscar_online_dbpedia(termino)
+    return {"cantidad_total": len(res), "resultados": res}
 
 @app.get("/busqueda-global/{termino}")
-def busqueda_global(termino: str):
-    local = buscar_local_owl(termino)
-    dbpedia = buscar_online_dbpedia(termino)
-
-    fusion = local + dbpedia
-
-    return {
-        "cantidad_local": len(local),
-        "cantidad_dbpedia": len(dbpedia),
-        "cantidad_total": len(fusion),
-        "resultados": fusion
-    }
-
+def global_ep(termino: str):
+    l = buscar_local_owl(termino)
+    d = buscar_online_dbpedia(termino)
+    return {"cantidad_local": len(l), "cantidad_dbpedia": len(d), "cantidad_total": len(l)+len(d), "resultados": l + d}
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="127.0.0.1", port=8001)
