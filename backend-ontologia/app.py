@@ -32,11 +32,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# --- FUNCIONES AUXILIARES ---
 
-# --- UTILIDADES ---
-def limpiar_valor(item):
-    if isinstance(item, Literal): return str(item)
-    s = str(item)
+def limpiar_valor(uri_o_literal):
+    if isinstance(uri_o_literal, Literal):
+        return str(uri_o_literal)
+
+    texto = str(uri_o_literal)
+
+
     for base in [URI_BASE, URI_BASE2]:
         if s.startswith(base): return s.replace(base, "")
     return s.split("#")[-1]
