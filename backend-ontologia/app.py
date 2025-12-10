@@ -47,6 +47,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+
 # --- FUNCIONES AUXILIARES ---
 
 def limpiar_valor(uri_o_literal):
